@@ -28,7 +28,7 @@ const initialKit = {
 };
 
 process.env.CAREER_OPS_ROOT = root;
-const { PATCH, syncKitToTracker, writeAtomicBatch } = await import("../../src/app/api/application-kit/route.ts");
+const { PATCH, missingKitSource, syncKitToTracker, writeAtomicBatch } = await import("../../src/app/api/application-kit/route.ts");
 
 async function patch(body) {
   return PATCH(new Request("http://localhost/api/application-kit", {
@@ -63,6 +63,12 @@ test("PATCH persists valid edits and leaves unsupported report conclusions absen
   const report = await readFile(join(root, data.trackerInfo.reportLink), "utf8");
   assert.match(report, /score: null/);
   assert.doesNotMatch(report, /High Confidence|final_decision|Direct match based on candidate profile|PDF:/);
+});
+
+test("missing application-kit source files produce actionable errors", () => {
+  assert.equal(missingKitSource(root, () => false), "Create cv.md first.");
+  assert.equal(missingKitSource(root, (filePath) => filePath.endsWith("cv.md")), "Create the configured profile first.");
+  assert.equal(missingKitSource(root, () => true), null);
 });
 
 test("PATCH rejects malformed values without modifying the kit or tracker", async () => {
