@@ -199,7 +199,7 @@ export async function syncKitToTracker(kit: any, kitFile?: string) {
       reportPath = path.join(reportsDir, reportFileName);
       const machineSummary = yaml.dump({ company, role, score: null }, { noRefs: true, lineWidth: 120 }).trim();
       const fence = "`".repeat(3);
-      reportContent = `# Application: ${reportLabel(company)} — ${reportLabel(role)}\n\n**Date:** ${today}  \n**Status:** Applied  \n\n---\n\n## Machine Summary\n\n${fence}yaml\n${machineSummary}\n${fence}\n`;
+      reportContent = `# Application: ${reportLabel(company)} — ${reportLabel(role)}\n\n**Date:** ${today}  \n**Status:** Applied  \n\n---\n\n## Machine Summary\n\n${fence}yaml\n${machineSummary}\n${fence}\n\n## Fit Summary\n\nThe model-generated fit summary is shown in the workspace for review and is not persisted as a verified conclusion.\n`;
       let lastTableLineIndex = -1;
       for (let i = lines.length - 1; i >= 0; i--) {
         if (lines[i].trim().startsWith("|")) {

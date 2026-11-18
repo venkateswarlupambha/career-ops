@@ -340,7 +340,12 @@ function KitView({ kit, setKit, updateAnswer, markApplied, markingApplied }: { k
             )}
           </div>
           <h2 className="mt-1 font-display text-3xl text-landing">{kit.company} · {kit.role}</h2>
-          <p className="mt-1 text-sm text-muted">{kit.fitSummary}</p>
+            {kit.fitSummary && (
+              <div className="mt-2">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-faint">Model-generated fit summary · unverified</p>
+                <p className="mt-1 text-sm text-muted">{kit.fitSummary}</p>
+              </div>
+            )}
         </div>
         {kit.appliedAt ? (
           <div className="flex items-center gap-2">

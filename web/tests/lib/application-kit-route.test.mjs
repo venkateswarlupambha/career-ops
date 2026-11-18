@@ -62,6 +62,7 @@ test("PATCH persists valid edits and leaves unsupported report conclusions absen
   assert.equal(data.kit.answers[0].answer, "Because");
   const report = await readFile(join(root, data.trackerInfo.reportLink), "utf8");
   assert.match(report, /score: null/);
+  assert.match(report, /not persisted as a verified conclusion/);
   assert.doesNotMatch(report, /High Confidence|final_decision|Direct match based on candidate profile|PDF:/);
 });
 
